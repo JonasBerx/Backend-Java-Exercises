@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:8080/texts
+
+### View all films : GET films
+GET {{baseUrl}}
+
+
+### Add a film : POST films
+POST {{baseUrl}}
+Content-Type: application/json
+
+{    
+    "content":"Star Wars: The Phantom Menace (Episode I)",
+    "level": "EASY"
+}
+
+### Add another film : POST films
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content":"Star Wars: Episode 2",
+    "level": "MEDIUM"
+}
+
+### Update film with ID == 2 : PUT films/{id}
+
+PUT {{baseUrl}}/2 
+Content-Type: application/json
+
+{
+    "content":"Star Wars: Episode 2",
+    "level": "HARD"
+}
+
+### Delete the film with ID == 2 : DELETE films/{id}
+DELETE {{baseUrl}}/2
+
+### Read film with ID == 1 : GET films/{id}
+GET {{baseUrl}}/1
+
+### View all films with duration of minimum 120 minutes : GET films?minimum-duration=value
+GET {{baseUrl}}?minimum-level=MEDIUM
+
+### Add a film with dangerous content : POST films
+POST {{baseUrl}}
+Content-Type: application/json
+
+{    
+    "content": "<img src='#' onerror='alert(66666)'>", 
+    "level": "EASY"
+}
