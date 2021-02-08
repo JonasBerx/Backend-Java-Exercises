@@ -54,7 +54,7 @@ const onUserRegistration = (userData) => {
   setUserSessionData(user);
   // re-render the navbar for the authenticated user
   Navbar();
-  RedirectUrl("/films");
+  RedirectUrl("/pages");
 };
 
 export default RegisterPage;

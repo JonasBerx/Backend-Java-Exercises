@@ -22,8 +22,8 @@ const Navbar = () => {
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="#" data-uri="/">Home</a>    
       <a class="nav-item nav-link" href="#" data-uri="/users">List users</a>
-      <a class="nav-item nav-link" href="#" data-uri="/films">List films</a>
-      <a class="nav-item nav-link" href="#" data-uri="/films/add">Add film</a>
+      <a class="nav-item nav-link" href="#" data-uri="/pages">List pages</a>
+      <a class="nav-item nav-link" href="#" data-uri="/pages/add">Add page</a>
       <a class="nav-item nav-link" href="#" data-uri="/logout">Logout</a>
       <a class="nav-item nav-link disabled" href="#">${user.user.login}</a>
     </div>

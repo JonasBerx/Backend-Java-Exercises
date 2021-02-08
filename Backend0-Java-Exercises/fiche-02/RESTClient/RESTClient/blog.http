@@ -46,16 +46,16 @@ Authorization: {{loggedUser.response.body.token}}
 
 ### Update film with ID == 2 : PUT films/{id}
 
-PUT {{baseUrl}}/1 
+PUT {{baseUrl}}/2
 Content-Type: application/json
 Authorization: {{token}}
 
 {
-    "title":"Star Wars: Episode 2323qweqwe",
+    "title":"LOLOL Posteeqweqweqweqw",
     "content": "OUI OUI OHN HON ONH",
-    "auteur": "{{loggedUser.response.body.user.id}}",
     "uri":"https://en.wikipedia.org/wiki/Star_Wars:_Episode_I_%E2%80%93_The_Phantom_Menace",
-    "pubStatus": "published"
+    "pubStatus": "hidden",
+    "auteur": "{{loggedUser.response.body.user.id}}"
 }
 
 ### Delete the film with ID == 2 : DELETE films/{id}
@@ -63,11 +63,7 @@ DELETE {{baseUrl}}/
 Authorization: {{token}}
 
 ### Read film with ID == 1 : GET films/{id}
-GET {{baseUrl}}/2
-Authorization: {{token}}
-
-### View all films with duration of minimum 120 minutes : GET films?minimumDuration=value
-GET {{baseUrl}}?minimum-duration=120
+GET {{baseUrl}}/4
 Authorization: {{token}}
 
 ### Add a film with dangerous content : POST films

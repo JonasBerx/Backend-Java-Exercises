@@ -78,9 +78,13 @@ public class PageResource {
             throw new WebApplicationException(
                     Response.status(Status.BAD_REQUEST).entity("Lacks of mandatory info").type("text/plain").build());
         User u = (User) requestContext.getProperty("user");
+        System.out.println(requestContext.getProperty("user"));
         page.setId(id);
+        System.out.println(page.getAuteur());
+        System.out.println(u.getID());
+        System.out.println("---");
         if (u.getID() != page.getAuteur()) {
-            throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity("Not sufficient rights to see this content").type("text/plain").build());
+            throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity("Not sufficient rights to adjust this content").type("text/plain").build());
         }
         Page updatedPage = DataServicePageCollection.updatePage(page);
 
@@ -102,7 +106,7 @@ public class PageResource {
         User u = (User) requestContext.getProperty("user");
         Page deletedPage = DataServicePageCollection.getPage(id);
         if (u.getID() != deletedPage.getAuteur()) {
-            throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity("Not sufficient rights to see this content").type("text/plain").build());
+            throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity("Not sufficient rights to delete this content").type("text/plain").build());
         }
         deletedPage = DataServicePageCollection.deletePage(id);
 
@@ -116,8 +120,11 @@ public class PageResource {
     // Public pages
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Page> getAllPages() {
-        return DataServicePageCollection.getPages();
+    @Authorize
+    public List<Page> getAllPages(@Context ContainerRequestContext requestContext) {
+        User u = (User) requestContext.getProperty("user");
+        System.out.println(u);
+        return DataServicePageCollection.getPages((User) requestContext.getProperty("user"));
 
     }
 

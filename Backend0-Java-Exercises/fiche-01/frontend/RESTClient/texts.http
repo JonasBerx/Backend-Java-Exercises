@@ -39,7 +39,7 @@ DELETE {{baseUrl}}/2
 GET {{baseUrl}}/1
 
 ### View all films with duration of minimum 120 minutes : GET films?minimum-duration=value
-GET {{baseUrl}}?minimum-level=MEDIUM
+GET {{baseUrl}}?level=HARD
 
 ### Add a film with dangerous content : POST films
 POST {{baseUrl}}

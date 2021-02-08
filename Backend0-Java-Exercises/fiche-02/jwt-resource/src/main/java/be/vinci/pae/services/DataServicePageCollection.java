@@ -2,10 +2,12 @@ package be.vinci.pae.services;
 
 import be.vinci.pae.domain.Page;
 import be.vinci.pae.domain.PublicUser;
+import be.vinci.pae.domain.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.text.StringEscapeUtils;
+import org.glassfish.jersey.inject.hk2.RequestContext;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DataServicePageCollection {
     private static final String DB_FILE_PATH = "db.json";
@@ -30,10 +33,18 @@ public class DataServicePageCollection {
         return pages.stream().filter(item -> item.getId() == id).findAny().orElse(null);
     }
 
+    public static List<Page> getAuthorHiddenPages(int authorId) {
+        return pages.stream().filter(item -> item.getPubStatus().equals("hidden")).filter(item -> item.getAuteur() == authorId).collect(Collectors.toList());
+    }
     // TODO Return only pages that have public status
-    public static List<Page> getPages() {
-        return pages.stream().filter(item -> item.getPubStatus().equals("published")).collect(Collectors.toList());
+    public static List<Page> getPages(User requestor) {
+        List<Page> publishedPages = pages.stream().filter(item -> item.getPubStatus().equals("published")).collect(Collectors.toList());
+        List<Page> authorHiddenPages = getAuthorHiddenPages(requestor.getID());
+        System.out.println(publishedPages);
+        System.out.println(authorHiddenPages);
 
+        return Stream.concat(publishedPages.stream(), authorHiddenPages.stream())
+                .collect(Collectors.toList());
     }
 
     public static Page addPage(Page page) {

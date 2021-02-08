@@ -3,9 +3,9 @@ import { getUserSessionData } from "../../utils/session.js";
 import callAPI from "../../utils/api.js";
 import PrintError from "../PrintError.js";
 
-const API_BASE_URL = "/api/films/";
+const API_BASE_URL = "/api/pages/";
 
-let addFilmPage = `<h4 id="pageTitle">Add a film</h4>
+let addPagePage = `<h4 id="pageTitle">Add a page</h4>
 <form>
 <div class="form-group">
   <label for="title">Enter title</label>
@@ -18,74 +18,77 @@ let addFilmPage = `<h4 id="pageTitle">Add a film</h4>
   />
 </div>
 <div class="form-group">
-  <label for="duration">Enter duration</label>
+  <label for="content">Enter content</label>
   <input
     class="form-control"
-    type="number"
-    name="duration"
-    id="duration"
+    type="text"
+    name="content"
+    id="content"
     required
   />
 </div>
 <div class="form-group">
-  <label for="budget">Enter budget</label>
+  <label for="pubStatus">Enter publishing status</label>
   <input
     class="form-control"
-    type="number"
-    name="budget"
-    id="budget"
+    type="text"
+    name="pubStatus"
+    id="pubStatus"
     required
   />
 </div>
 <div class="form-group">
-  <label for="link">Enter link</label>
+  <label for="uri">Enter Url</label>
   <input
     class="form-control"
     type="url"
-    name="link"
-    id="link"
+    name="uri"
+    id="uri"
     required
   />
 </div>
 <input type="submit" class="btn btn-primary" value="Add Film" />
 </form>`;
 
-const AddFilmPage = () => {  
+const AddPagePage = () => {  
 
   let page = document.querySelector("#page");
-  page.innerHTML = addFilmPage;
+  page.innerHTML = addPagePage;
   let filmForm = document.querySelector("form");
   filmForm.addEventListener("submit", onAddFilm);
 };
 
 const onAddFilm = async (e) => {
   e.preventDefault();
-  let film = {
+  let auteurId = JSON.parse(localStorage.getItem("user"));
+  console.log(auteurId)
+  let page = {
     title: document.getElementById("title").value,
-    duration: document.getElementById("duration").value,
-    budget: document.getElementById("budget").value,
-    link: document.getElementById("link").value,
+    content: document.getElementById("content").value,
+    pubStatus: document.getElementById("pubStatus").value,
+    uri: document.getElementById("uri").value,
+    auteur: auteurId.user.id
   };
 
   const user = getUserSessionData();
 
   try {
-    const filmAdded = await callAPI(
+    const pageAdded = await callAPI(
       API_BASE_URL ,
       "POST",
       user.token,
-      film
+      page
     );
-    onFilmAdded(filmAdded);
+    onFilmAdded(pageAdded);
   } catch (err) {
-    console.error("AddFilmPage::onAddFilm", err);
+    console.error("AddPagePage::onAddPage", err);
     PrintError(err);
   }  
 }
 
 const onFilmAdded = (data) => {
   console.log(data);  
-  RedirectUrl("/films");
+  RedirectUrl("/pages");
 };
 
-export default AddFilmPage;
+export default AddPagePage;
